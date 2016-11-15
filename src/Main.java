@@ -3,8 +3,8 @@ import java.lang.*;
 import java.util.Random;
 
 public class Main {
-    private static final int maxIntegerSize = 2500;
-    private static final int maxArraySize = 2000;
+    private static final int MAX_INTEGER_SIZE = 4500;
+    private static final int MAX_ARRAY_SIZE = 4000;
     private static String file = "data.csv";
     private static long startTime;
     private static long endTime;
@@ -23,17 +23,17 @@ public class Main {
         Random generator = new Random();
         try {
             output = new BufferedWriter(new FileWriter(file));
-            output.write("Execution Time Merge Sort,Execution Time Insertion Sort");
+            output.write("Array Length,Execution Time Merge Sort,Execution Time Insertion Sort");
             output.newLine();
 
-            for (int i = 1; i <= maxArraySize; i++) {
+            for (int i = 1; i <= MAX_ARRAY_SIZE; i++) {
                 int[] list = new int[i];
                 for (int count = 0; count < list.length; count++) {
-                    list[count] = generator.nextInt(maxIntegerSize);
+                    list[count] = generator.nextInt(MAX_INTEGER_SIZE);
                 }
                 mergeTime = runMerge(list);
                 insertionTime = runInsertion(list);
-                output.write(mergeTime + "," + insertionTime);
+                output.write(list.length + "," + mergeTime + "," + insertionTime);
                 output.newLine();
             }
         } catch (IOException e) {
@@ -53,9 +53,9 @@ public class Main {
         int[] result;
         merge = new MergeSort();
 
-        startTime = System.currentTimeMillis();
+        startTime = System.nanoTime();
         result = merge.sort(list);
-        endTime = System.currentTimeMillis();
+        endTime = System.nanoTime();
         totalTime = endTime - startTime;
 
         return totalTime;
@@ -66,9 +66,9 @@ public class Main {
         int[] result;
         insertion = new InsertionSort();
 
-        startTime = System.currentTimeMillis();
+        startTime = System.nanoTime();
         result = insertion.sort(list);
-        endTime = System.currentTimeMillis();
+        endTime = System.nanoTime();
         totalTime = endTime - startTime;
 
         return totalTime;

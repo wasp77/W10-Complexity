@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Tests/Tests.iml" filepath="$PROJECT_DIR$/Tests/Tests.iml" />
       <module fileurl="file://$PROJECT_DIR$/W10-Complexity.iml" filepath="$PROJECT_DIR$/W10-Complexity.iml" />
     </modules>
   </component>
