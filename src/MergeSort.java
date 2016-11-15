@@ -1,21 +1,18 @@
+
 import java.util.Arrays;
 
-/**
- * Created by johndupuis on 11/13/16.
- */
 public class MergeSort {
 
     public int[] sort(int[] testArray) {
-        if (testArray.length == 1) {
-            return testArray;
-        } else {
+        if (testArray.length > 1) {
             int middle = testArray.length/2;
             int[] first = Arrays.copyOfRange(testArray, 0, middle);
             int[] second = Arrays.copyOfRange(testArray, middle, testArray.length);
             sort(first);
             sort(second);
-            return merge(first, second, testArray);
+            testArray = merge(first, second, testArray);
         }
+        return testArray;
     }
 
     public int[] merge(int[] first, int[] second, int[] testArray) {
@@ -42,6 +39,7 @@ public class MergeSort {
         return testArray;
 
     }
+
 
 
 }

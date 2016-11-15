@@ -1,6 +1,4 @@
-/**
- * Created by johndupuis on 11/13/16.
- */
+
 public class InsertionSort {
     public int[] sort(int[] testArray) {
         if (testArray.length == 1) {
