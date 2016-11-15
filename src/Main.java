@@ -3,8 +3,8 @@ import java.lang.*;
 import java.util.Random;
 
 public class Main {
-    private static final int MAX_INTEGER_SIZE = 4500;
-    private static final int MAX_ARRAY_SIZE = 4000;
+    private static final int MAX_INTEGER_SIZE = 2500;
+    private static final int MAX_ARRAY_SIZE = 2000;
     private static String file = "data.csv";
     private static long startTime;
     private static long endTime;
@@ -14,6 +14,8 @@ public class Main {
     private static BufferedWriter output;
     private static long mergeTime;
     private static long insertionTime;
+    private static long mergeAccumulator;
+    private static long insertionAccumulator;
 
     public static void main(String[] args) {
        run();
@@ -31,8 +33,13 @@ public class Main {
                 for (int count = 0; count < list.length; count++) {
                     list[count] = generator.nextInt(MAX_INTEGER_SIZE);
                 }
-                mergeTime = runMerge(list);
-                insertionTime = runInsertion(list);
+
+                for (int count = 0; count < 10; count++) {
+                    mergeAccumulator += runMerge(list);
+                    insertionAccumulator += runInsertion(list);
+                }
+                mergeTime = mergeAccumulator/10;
+                insertionTime = insertionAccumulator/10;
                 output.write(list.length + "," + mergeTime + "," + insertionTime);
                 output.newLine();
             }
