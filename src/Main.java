@@ -3,15 +3,17 @@ import java.lang.*;
 import java.util.Random;
 
 public class Main {
-    private static final int maxIntegerSize = 100;
-    private static final int maxArraySize = 10;
+    private static final int maxIntegerSize = 2500;
+    private static final int maxArraySize = 2000;
     private static String file = "data.csv";
     private static long startTime;
     private static long endTime;
     private static long totalTime;
     private static MergeSort merge;
     private static InsertionSort insertion;
-    private static PrintWriter output;
+    private static BufferedWriter output;
+    private static long mergeTime;
+    private static long insertionTime;
 
     public static void main(String[] args) {
        run();
@@ -20,23 +22,33 @@ public class Main {
     public static void run() {
         Random generator = new Random();
         try {
-            output = new PrintWriter(new File("data.csv"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            output = new BufferedWriter(new FileWriter(file));
+            output.write("Execution Time Merge Sort,Execution Time Insertion Sort");
+            output.newLine();
 
-        for (int i = 1; i <= maxArraySize; i++) {
-            int[] list = new int[i];
-            for (int count = 0; count < list.length; count++) {
-                list[count] = generator.nextInt(maxIntegerSize);
+            for (int i = 1; i <= maxArraySize; i++) {
+                int[] list = new int[i];
+                for (int count = 0; count < list.length; count++) {
+                    list[count] = generator.nextInt(maxIntegerSize);
+                }
+                mergeTime = runMerge(list);
+                insertionTime = runInsertion(list);
+                output.write(mergeTime + "," + insertionTime);
+                output.newLine();
             }
-            runMerge(list);
-            runInsertion(list);
+        } catch (IOException e) {
+            System.out.println("Problem writing to the file: " + e);
+        } finally {
+            try {
+                System.out.println("closed");
+                output.close();
+            } catch (IOException e) {
+                System.out.println("Problem closing BufferedWriter: " + e);
+            }
         }
-
     }
 
-    public static void runMerge(int[] list) {
+    public static long runMerge(int[] list) {
 
         int[] result;
         merge = new MergeSort();
@@ -46,15 +58,10 @@ public class Main {
         endTime = System.currentTimeMillis();
         totalTime = endTime - startTime;
 
-//        for (int i = 0; i < result.length; i++) {
-//            System.out.println(result[i]);
-//        }
-
-        System.out.println("Merge Sort, time: " + totalTime + " array size: " + result.length);
-
+        return totalTime;
     }
 
-    public static void runInsertion(int[] list) {
+    public static long runInsertion(int[] list) {
 
         int[] result;
         insertion = new InsertionSort();
@@ -64,10 +71,6 @@ public class Main {
         endTime = System.currentTimeMillis();
         totalTime = endTime - startTime;
 
-//        for (int i = 0; i < result.length; i++) {
-//            System.out.println(result[i]);
-//        }
-
-        System.out.println("Insertion Sort, time: " + totalTime + " array size: " + result.length);
+        return totalTime;
     }
 }
